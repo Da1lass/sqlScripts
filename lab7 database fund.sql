@@ -99,12 +99,19 @@ CREATE TABLE donation (
     ForDepartmentID VARCHAR2(4) NOT NULL,
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
     CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
-    REFERENCES department(Department)
+    REFERENCES department(Department) --is this correct? ask carpenter 
 );
 
 DROP TABLE enrollment;
 CREATE TABLE enrollment ( 
-    
+    ENumber VARCHAR2(9) NOT NULL,
+    DepartmentID VARCHAR2(4) NOT NULL,
+    CourseNumber VARCHAR2(4) NOT NULL,
+    SectionNumber VARCHAR2(3) NOT NULL,
+    CONSTRAINT FK_ENumber --idk what2 do here
+    CONSTRAINT FK_Department 
+    CONSTRAINT FK_Course 
+    CONSTRAINT FK_Section 
 );
 
 DROP TABLE gift;
