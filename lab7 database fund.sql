@@ -104,32 +104,40 @@ CREATE TABLE donation (
 
 DROP TABLE enrollment;
 CREATE TABLE enrollment ( 
-    );
+    
+);
 
 DROP TABLE gift;
 CREATE TABLE gift (
-    );
+    
+);
 
 DROP TABLE job;
 CREATE TABLE job (
-    );
+    
+);
 
 DROP TABLE meeting;
 CREATE TABLE meeting (
-    );
+    
+);
 
 DROP TABLE person;
 CREATE TABLE person (
-    );
+    
+);
 
 DROP TABLE position;
 CREATE TABLE position (
-    );
+    
+);
 
 DROP TABLE room;
 CREATE TABLE room (
-    );
+    
+);
 
 DROP TABLE section;
 CREATE TABLE section (
-    );
+    
+);
