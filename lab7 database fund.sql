@@ -22,7 +22,8 @@ CREATE TABLE building (
     BuildingName VARCHAR2(30) NOT NULL,
     Street VARCHAR2(50),
     City VARCHAR2(50),
-    State VARCHAR2(2));
+    State VARCHAR2(2)
+);
 
 -- 1.2: Select Building Table
 SELECT * FROM building;
@@ -39,7 +40,8 @@ CREATE TABLE building (
     Street VARCHAR2(50),
     City VARCHAR2(50),
     State VARCHAR2(2),
-    CONSTRAINT PK_Building PRIMARY KEY (BuildingID) );
+    CONSTRAINT PK_Building PRIMARY KEY (BuildingID)
+);
 
 -- 1.4a: ALTER Building Table to Add the ZIP column
 ALTER TABLE building
@@ -54,7 +56,8 @@ CREATE TABLE building (
     City VARCHAR2(50),
     State VARCHAR2(2),
     Zipcode NUMBER(5),
-    CONSTRAINT PK_Building PRIMARY KEY (BuildingID) );
+    CONSTRAINT PK_Building PRIMARY KEY (BuildingID) 
+);
 /* 1.5: Why use ALTER instead of DROP and (re)CREATE?
 
 <<Type your answer here.>>
@@ -70,24 +73,34 @@ CREATE INDEX IDX_BuildingName ON Building(BuildingName);
 
 DROP TABLE course;
 CREATE TABLE course ( 
-    );
+    DepartmentID VARCHAR2(4) NOT NULL,
+    CourseNumber VARCHAR2(4) NOT NULL,
+    CourseTitle VARCHAR2(60) NOT NULL,
+    CatalogDescription VARCHAR2(500) NOT NULL,
+    CreditHours NUMBER(5,3) NOT NULL,
+    CONSTRAINT PK_CourseNumber PRIMARY KEY (CourseNumber),
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID),
+    REFERENCES department(Department)
+);
 
 DROP TABLE department;
 CREATE TABLE department (
-    Department VARCHAR(4) NOT NULL,
-    DepartmentName VARCHAR(50) NOT NULL,
+    Department VARCHAR2(4) NOT NULL,
+    DepartmentName VARCHAR2(50) NOT NULL,
     DepartmentOffice VARCHAR2(30),
-    CONSTRAINT PK_Department PRIMARY KEY (Department) );
+    CONSTRAINT PK_Department PRIMARY KEY (Department)
+);
 
 DROP TABLE donation;
 CREATE TABLE donation (
     DonationId NUMBER(5) NOT NULL,
     Amount NUMBER(10,2) NOT NULL,
     Type CHAR(2) NOT NULL,
-    ForDepartmentID VARCHAR(4) NOT NULL,
+    ForDepartmentID VARCHAR2(4) NOT NULL,
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
     CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
-    REFERENCES department(Department) );
+    REFERENCES department(Department)
+);
 
 DROP TABLE enrollment;
 CREATE TABLE enrollment ( 
