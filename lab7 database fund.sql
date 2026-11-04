@@ -150,7 +150,10 @@ CREATE TABLE person (
 
 DROP TABLE position;
 CREATE TABLE position (
-    
+    PositionNumber VARCHAR2(6) NOT NULL,
+    PositionTitle VARCHAR2(30) NOT NULL,
+    ActiveIndicator CHAR NOT NULL,
+    CONSTRAINT PK_Position PRIMARY KEY (PositionNumber)
 );
 
 DROP TABLE room;
