@@ -131,7 +131,21 @@ CREATE TABLE meeting (
 
 DROP TABLE person;
 CREATE TABLE person (
-    
+    ENumber VARCHAR2(9) NOT NULL,
+    SSN VARCHAR2(9),
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Street VARCHAR2(50),
+    City VARCHAR2(2),
+    Zipcode VARCHAR2(9),
+    Telephone VARCHAR2(10),
+    BuildingID NUMBER(3),
+    RoomNumber NUMBER(4),
+    CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
+    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
+    REFERENCES building(BuildingID),
+    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
+    REFERENCES room(RoomNumber)
 );
 
 DROP TABLE position;
