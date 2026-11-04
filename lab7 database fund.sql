@@ -64,3 +64,59 @@ CREATE TABLE building (
 -- 1.6: Indexing the Building Name
 
 CREATE INDEX IDX_BuildingName ON Building(BuildingName);
+
+/**********************************************/
+/** PART 2: Creating the University Database **/
+
+DROP TABLE course;
+CREATE TABLE course ( 
+    );
+
+DROP TABLE department;
+CREATE TABLE department (
+    Department VARCHAR(4) NOT NULL,
+    DepartmentName VARCHAR(50) NOT NULL,
+    DepartmentOffice VARCHAR2(30),
+    CONSTRAINT PK_Department PRIMARY KEY (Department) );
+
+DROP TABLE donation;
+CREATE TABLE donation (
+    DonationId NUMBER(5) NOT NULL,
+    Amount NUMBER(10,2) NOT NULL,
+    Type CHAR(2) NOT NULL,
+    ForDepartmentID VARCHAR(4) NOT NULL,
+    CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
+    CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
+    REFERENCES department(Department) );
+
+DROP TABLE enrollment;
+CREATE TABLE enrollment ( 
+    );
+
+DROP TABLE gift;
+CREATE TABLE gift (
+    );
+
+DROP TABLE job;
+CREATE TABLE job (
+    );
+
+DROP TABLE meeting;
+CREATE TABLE meeting (
+    );
+
+DROP TABLE person;
+CREATE TABLE person (
+    );
+
+DROP TABLE position;
+CREATE TABLE position (
+    );
+
+DROP TABLE room;
+CREATE TABLE room (
+    );
+
+DROP TABLE section;
+CREATE TABLE section (
+    );
