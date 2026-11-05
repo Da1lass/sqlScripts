@@ -106,7 +106,7 @@ CREATE TABLE section (
     CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
     CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber)
+        REFERENCES course(CourseNumber),
     CONSTRAINT FK_TeacherENumber FOREIGN KEY (TeacherENumber)
         REFERENCES person(ENumber)
 );
