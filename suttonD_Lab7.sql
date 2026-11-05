@@ -132,11 +132,11 @@ CREATE TABLE section (
     MaximumEnrollment NUMBER(3),
     TeacherENumber VARCHAR2(9),
     CONSTRAINT PK_Section PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+    CONSTRAINT FK_SectionDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
+    CONSTRAINT FK_SectionCourse FOREIGN KEY (CourseNumber)
         REFERENCES course(CourseNumber),
-    CONSTRAINT FK_TeacherENumber FOREIGN KEY (TeacherENumber)
+    CONSTRAINT FK_SectionENumber FOREIGN KEY (TeacherENumber)
         REFERENCES person(ENumber)
 );
 
@@ -147,7 +147,7 @@ CREATE TABLE donation (
     Type CHAR(2) NOT NULL,
     ForDepartmentID VARCHAR2(4),
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
-    CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
+    CONSTRAINT FK_DonationDepartment FOREIGN KEY (ForDepartmentID) 
         REFERENCES department(DepartmentID) 
 );
 
@@ -158,9 +158,9 @@ CREATE TABLE gift (
     GiftDate DATE NOT NULL,
     ReceiptDate DATE,
     CONSTRAINT PK_Gift PRIMARY KEY (DonationID, ENumber, GiftDate),
-    CONSTRAINT FK_Donation FOREIGN KEY (DonationID)
+    CONSTRAINT FK_GiftDonation FOREIGN KEY (DonationID)
         REFERENCES donation(DonationID),
-    CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
+    CONSTRAINT FK_GiftENumber FOREIGN KEY (ENumber)
         REFERENCES person(ENumber)
 );
 
@@ -171,13 +171,13 @@ CREATE TABLE enrollment (
     CourseNumber VARCHAR2(4) NOT NULL,
     SectionNumber VARCHAR2(3) NOT NULL,
     CONSTRAINT PK_Enrollment PRIMARY KEY (ENumber, DepartmentID, CourseNumber, SectionNumber),
-    CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
+    CONSTRAINT FK_EnrollmentENumber FOREIGN KEY (ENumber)
         REFERENCES person(ENumber),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+    CONSTRAINT FK_EnrollmentDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
+    CONSTRAINT FK_EnrollmentCourse FOREIGN KEY (CourseNumber)
         REFERENCES course(CourseNumber),
-    CONSTRAINT FK_Section FOREIGN KEY (SectionNumber)
+    CONSTRAINT FK_EnrollmentSection FOREIGN KEY (SectionNumber)
         REFERENCES section(SectionNumber)
 );
 
@@ -197,9 +197,9 @@ CREATE TABLE job (
     EndDate DATE,
     Salary NUMBER(8,2),
     CONSTRAINT PK_Job PRIMARY KEY (ENumber, PositionNumber),
-    CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
+    CONSTRAINT FK_JobENumber FOREIGN KEY (ENumber)
         REFERENCES person(ENumber),
-    CONSTRAINT FK_Position FOREIGN KEY (PositionNumber)
+    CONSTRAINT FK_JobPosition FOREIGN KEY (PositionNumber)
         REFERENCES position(PositionNumber)
 );
 
@@ -214,14 +214,14 @@ CREATE TABLE meeting (
     StartTime VARCHAR2(5) NOT NULL,
     EndTime	VARCHAR2(5)	NOT NULL,
     CONSTRAINT PK_Meeting PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber, BuildingID, RoomNumber, Day, StartTime, EndTime),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+    CONSTRAINT FK_JobDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
+    CONSTRAINT FK_JobCourse FOREIGN KEY (CourseNumber)
         REFERENCES course(CourseNumber),
-    CONSTRAINT FK_Section FOREIGN KEY (SectionNumber)
+    CONSTRAINT FK_JobSection FOREIGN KEY (SectionNumber)
         REFERENCES section(SectionNumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
+    CONSTRAINT FK_JobBuilding FOREIGN KEY (BuildingID)
         REFERENCES building(BuildingID),
-    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
+    CONSTRAINT FK_JobRoom FOREIGN KEY (RoomNumber)
         REFERENCES room(RoomNumber)
 );
