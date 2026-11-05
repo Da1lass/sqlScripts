@@ -134,8 +134,8 @@ CREATE TABLE section (
     CONSTRAINT PK_Section PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber),
     CONSTRAINT FK_SectionDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_SectionCourse FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber),
+    CONSTRAINT FK_SectionCourse FOREIGN KEY (DepartmentID, CourseNumber)
+        REFERENCES course(DepartmentID, CourseNumber),
     CONSTRAINT FK_SectionENumber FOREIGN KEY (TeacherENumber)
         REFERENCES person(ENumber)
 );
@@ -175,10 +175,10 @@ CREATE TABLE enrollment (
         REFERENCES person(ENumber),
     CONSTRAINT FK_EnrollmentDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_EnrollmentCourse FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber),
-    CONSTRAINT FK_EnrollmentSection FOREIGN KEY (SectionNumber)
-        REFERENCES section(SectionNumber)
+    CONSTRAINT FK_EnrollmentCourse FOREIGN KEY (DepartmentID, CourseNumber)
+        REFERENCES course(DepartmentID, CourseNumber),
+    CONSTRAINT FK_EnrollmentSection FOREIGN KEY (DepartmentID, CourseNumber, SectionNumber)
+        REFERENCES section(DepartmentID, CourseNumber, SectionNumber)
 );
 
 DROP TABLE position;
@@ -216,12 +216,12 @@ CREATE TABLE meeting (
     CONSTRAINT PK_Meeting PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber, BuildingID, RoomNumber, Day, StartTime, EndTime),
     CONSTRAINT FK_JobDepartment FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
-    CONSTRAINT FK_JobCourse FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber),
-    CONSTRAINT FK_JobSection FOREIGN KEY (SectionNumber)
-        REFERENCES section(SectionNumber),
+    CONSTRAINT FK_JobCourse FOREIGN KEY (DepartmentID, CourseNumber)
+        REFERENCES course(DepartmentID, CourseNumber),
+    CONSTRAINT FK_JobSection FOREIGN KEY (DepartmentID, CourseNumber, SectionNumber)
+        REFERENCES section(DepartmentID, CourseNumber, SectionNumber),
     CONSTRAINT FK_JobBuilding FOREIGN KEY (BuildingID)
         REFERENCES building(BuildingID),
-    CONSTRAINT FK_JobRoom FOREIGN KEY (RoomNumber)
-        REFERENCES room(RoomNumber)
+    CONSTRAINT FK_JobRoom FOREIGN KEY (BuildingID, RoomNumber)
+        REFERENCES room(BuildingID, RoomNumber)
 );
