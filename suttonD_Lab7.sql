@@ -79,7 +79,7 @@ CREATE TABLE course (
     CatalogDescription VARCHAR2(500) NOT NULL,
     CreditHours NUMBER(5,3) NOT NULL,
     CONSTRAINT PK_CourseNumber PRIMARY KEY (CourseNumber),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID), --also is pk idk what2do
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID) --also is pk idk what2do
         REFERENCES department(DepartmentID)
 );
 
@@ -108,7 +108,7 @@ CREATE TABLE enrollment (
     DepartmentID VARCHAR2(4) NOT NULL,
     CourseNumber VARCHAR2(4) NOT NULL,
     SectionNumber VARCHAR2(3) NOT NULL,
-    CONSTRAINT PK_Enrollment PRIMARY KEY (ENumber, DepartmentID, CourseNumber, SectionNumber) 
+    CONSTRAINT PK_Enrollment PRIMARY KEY (ENumber, DepartmentID, CourseNumber, SectionNumber),
     CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
         REFERENCES person(ENumber),
     CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
@@ -125,46 +125,46 @@ CREATE TABLE gift (
     ENumber VARCHAR2(9) NOT NULL, 
     GiftDate DATE NOT NULL,
     ReceiptDate DATE,
-    CONSTRAINT PK_Gift PRIMARY KEY (DonationID, ENumber, GiftDate)
+    CONSTRAINT PK_Gift PRIMARY KEY (DonationID, ENumber, GiftDate),
     CONSTRAINT FK_Donation FOREIGN KEY (DonationID)
-        REFERENCES donation(DonationID)
+        REFERENCES donation(DonationID),
     CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
         REFERENCES person(ENumber)
 );
 
 DROP TABLE job;
 CREATE TABLE job (
-    ENumber VARCHAR2(9)	NOT NULL
-    PositionNumber VARCHAR2(6)	NOT NULL
-    StartDate DATE
-    EndDate DATE
-    Salary NUMBER(8,2)
+    ENumber VARCHAR2(9)	NOT NULL,
+    PositionNumber VARCHAR2(6)	NOT NULL,
+    StartDate DATE,
+    EndDate DATE,
+    Salary NUMBER(8,2),
     CONSTRAINT PK_Job PRIMARY KEY (ENumber, PositionNumber),
     CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
-        REFERENCES person(ENumber)
+        REFERENCES person(ENumber),
     CONSTRAINT FK_Position FOREIGN KEY (PositionNumber)
         REFERENCES position(PositionNumber)
 );
 
 DROP TABLE meeting;
 CREATE TABLE meeting (
-    DepartmentID VARCHAR2(4) NOT NULL
-    CourseNumber VARCHAR2(4) NOT NULL
-    SectionNumber VARCHAR2(3) NOT NULL
-    BuildingID NUMBER(3) NOT NULL
-    RoomNumber NUMBER(4) NOT NULL
-    Day	VARCHAR2(7) NOT NULL
-    StartTime VARCHAR2(5) NOT NULL
-    EndTime	VARCHAR2(5)	NOT NULL
-    CONSTRAINT PK_Meeting PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber, BuildingID, RoomNumber, Day, StartTime, EndTime)
+    DepartmentID VARCHAR2(4) NOT NULL,
+    CourseNumber VARCHAR2(4) NOT NULL,
+    SectionNumber VARCHAR2(3) NOT NULL,
+    BuildingID NUMBER(3) NOT NULL,
+    RoomNumber NUMBER(4) NOT NULL,
+    Day	VARCHAR2(7) NOT NULL,
+    StartTime VARCHAR2(5) NOT NULL,
+    EndTime	VARCHAR2(5)	NOT NULL,
+    CONSTRAINT PK_Meeting PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber, BuildingID, RoomNumber, Day, StartTime, EndTime),
     CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
     CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber)
+        REFERENCES course(CourseNumber),
     CONSTRAINT FK_Section FOREIGN KEY (SectionNumber)
-        REFERENCES section(SectionNumber)
+        REFERENCES section(SectionNumber),
     CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
-        REFERENCES building(BuildingID)
+        REFERENCES building(BuildingID),
     CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
         REFERENCES room(RoomNumber)
 );
@@ -198,10 +198,10 @@ CREATE TABLE position (
 
 DROP TABLE room;
 CREATE TABLE room (
-    BuildingID NUMBER(3) NOT NULL
-    RoomNumber NUMBER(4) NOT NULL
-    RoomType CHAR
-    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber)
+    BuildingID NUMBER(3) NOT NULL,
+    RoomNumber NUMBER(4) NOT NULL,
+    RoomType CHAR,
+    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber),
     CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
         REFERENCES building(BuildingID)
 );
@@ -211,10 +211,10 @@ CREATE TABLE section (
     DepartmentID VARCHAR2(4) NOT NULL,
     CourseNumber VARCHAR2(4) NOT NULL,
     SectionNumber VARCHAR2(3) NOT NULL,
-    CreditHours	NUMBER(5,3)
-    SpecialTitle VARCHAR2(30)
-    MaximumEnrollment NUMBER(3)
-    TeacherENumber VARCHAR2(9)
+    CreditHours	NUMBER(5,3),
+    SpecialTitle VARCHAR2(30),
+    MaximumEnrollment NUMBER(3),
+    TeacherENumber VARCHAR2(9),
     CONSTRAINT PK_Section PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber),
     CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
         REFERENCES department(DepartmentID),
