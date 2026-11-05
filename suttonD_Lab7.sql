@@ -70,10 +70,19 @@ CREATE INDEX IDX_BuildingName ON Building(BuildingName);
 
 /**********************************************/
 /** PART 2: Creating the University Database **/
+DROP TABLE meeting;
+DROP TABLE job;
+DROP TABLE position;
+DROP TABLE enrollment;
+DROP TABLE gift;
+DROP TABLE donation;
+DROP TABLE section;
+DROP TABLE person;
+DROP TABLE room;
+DROP TABLE course;
+DROP TABLE department; --drops all the tables in reverse order of creation
 
 
-
-DROP TABLE department;
 CREATE TABLE department (
     DepartmentID VARCHAR2(4) NOT NULL,
     DepartmentName VARCHAR2(50) NOT NULL,
@@ -81,7 +90,6 @@ CREATE TABLE department (
     CONSTRAINT PK_Department PRIMARY KEY (DepartmentID)
 );
 
-DROP TABLE course;
 CREATE TABLE course ( 
     DepartmentID VARCHAR2(4) NOT NULL,
     CourseNumber VARCHAR2(4) NOT NULL,
@@ -93,7 +101,6 @@ CREATE TABLE course (
         REFERENCES department(DepartmentID)
 );
 
-DROP TABLE room;
 CREATE TABLE room (
     BuildingID NUMBER(3) NOT NULL,
     RoomNumber NUMBER(4) NOT NULL,
@@ -103,7 +110,6 @@ CREATE TABLE room (
         REFERENCES building(BuildingID)
 );
 
-DROP TABLE person;
 CREATE TABLE person (
     ENumber VARCHAR2(9) NOT NULL,
     SSN VARCHAR2(9),
@@ -122,7 +128,6 @@ CREATE TABLE person (
         REFERENCES room(BuildingID, RoomNumber) --it needs both building and room as the pk of room uses both buildingId and roomNum
 );
 
-DROP TABLE section;
 CREATE TABLE section (
     DepartmentID VARCHAR2(4) NOT NULL,
     CourseNumber VARCHAR2(4) NOT NULL,
@@ -140,7 +145,6 @@ CREATE TABLE section (
         REFERENCES person(ENumber)
 );
 
-DROP TABLE donation;
 CREATE TABLE donation (
     DonationId NUMBER(5) NOT NULL,
     Amount NUMBER(10,2) NOT NULL,
@@ -151,7 +155,6 @@ CREATE TABLE donation (
         REFERENCES department(DepartmentID) 
 );
 
-DROP TABLE gift;
 CREATE TABLE gift (
     DonationID NUMBER(5) NOT NULL,
     ENumber VARCHAR2(9) NOT NULL, 
@@ -164,7 +167,6 @@ CREATE TABLE gift (
         REFERENCES person(ENumber)
 );
 
-DROP TABLE enrollment;
 CREATE TABLE enrollment ( 
     ENumber VARCHAR2(9) NOT NULL,
     DepartmentID VARCHAR2(4) NOT NULL,
@@ -181,7 +183,6 @@ CREATE TABLE enrollment (
         REFERENCES section(DepartmentID, CourseNumber, SectionNumber)
 );
 
-DROP TABLE position;
 CREATE TABLE position (
     PositionNumber VARCHAR2(6) NOT NULL,
     PositionTitle VARCHAR2(30) NOT NULL,
@@ -189,7 +190,6 @@ CREATE TABLE position (
     CONSTRAINT PK_Position PRIMARY KEY (PositionNumber)
 );
 
-DROP TABLE job;
 CREATE TABLE job (
     ENumber VARCHAR2(9)	NOT NULL,
     PositionNumber VARCHAR2(6)	NOT NULL,
@@ -203,7 +203,6 @@ CREATE TABLE job (
         REFERENCES position(PositionNumber)
 );
 
-DROP TABLE meeting;
 CREATE TABLE meeting (
     DepartmentID VARCHAR2(4) NOT NULL,
     CourseNumber VARCHAR2(4) NOT NULL,
