@@ -118,8 +118,8 @@ CREATE TABLE person (
     CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
     CONSTRAINT FK_PersonBuilding FOREIGN KEY (BuildingID) 
         REFERENCES building(BuildingID),
-    CONSTRAINT FK_PersonRoom FOREIGN KEY (RoomNumber)
-        REFERENCES room(RoomNumber)
+    CONSTRAINT FK_PersonRoom FOREIGN KEY (BuildingID, RoomNumber)
+        REFERENCES room(BuildingID, RoomNumber) --it needs both building and room as the pk of room uses both buildingId and roomNum
 );
 
 DROP TABLE section;
