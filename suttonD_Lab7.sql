@@ -93,6 +93,16 @@ CREATE TABLE course (
         REFERENCES department(DepartmentID)
 );
 
+DROP TABLE room;
+CREATE TABLE room (
+    BuildingID NUMBER(3) NOT NULL,
+    RoomNumber NUMBER(4) NOT NULL,
+    RoomType CHAR,
+    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber),
+    CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
+        REFERENCES building(BuildingID)
+);
+
 DROP TABLE person;
 CREATE TABLE person (
     ENumber VARCHAR2(9) NOT NULL,
@@ -139,16 +149,6 @@ CREATE TABLE donation (
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
     CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
         REFERENCES department(DepartmentID) 
-);
-
-DROP TABLE room;
-CREATE TABLE room (
-    BuildingID NUMBER(3) NOT NULL,
-    RoomNumber NUMBER(4) NOT NULL,
-    RoomType CHAR,
-    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
-        REFERENCES building(BuildingID)
 );
 
 DROP TABLE gift;
