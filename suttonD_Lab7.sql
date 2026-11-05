@@ -93,6 +93,25 @@ CREATE TABLE course (
         REFERENCES department(DepartmentID)
 );
 
+DROP TABLE person;
+CREATE TABLE person (
+    ENumber VARCHAR2(9) NOT NULL,
+    SSN VARCHAR2(9),
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Street VARCHAR2(50),
+    City VARCHAR2(2),
+    Zipcode VARCHAR2(9),
+    Telephone VARCHAR2(10),
+    BuildingID NUMBER(3),
+    RoomNumber NUMBER(4),
+    CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
+    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
+        REFERENCES building(BuildingID),
+    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
+        REFERENCES room(RoomNumber)
+);
+
 DROP TABLE section;
 CREATE TABLE section (
     DepartmentID VARCHAR2(4) NOT NULL,
@@ -120,25 +139,6 @@ CREATE TABLE donation (
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
     CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
         REFERENCES department(DepartmentID) 
-);
-
-DROP TABLE person;
-CREATE TABLE person (
-    ENumber VARCHAR2(9) NOT NULL,
-    SSN VARCHAR2(9),
-    FirstName VARCHAR2(50) NOT NULL,
-    LastName VARCHAR2(50) NOT NULL,
-    Street VARCHAR2(50),
-    City VARCHAR2(2),
-    Zipcode VARCHAR2(9),
-    Telephone VARCHAR2(10),
-    BuildingID NUMBER(3),
-    RoomNumber NUMBER(4),
-    CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
-        REFERENCES building(BuildingID),
-    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
-        REFERENCES room(RoomNumber)
 );
 
 DROP TABLE room;
