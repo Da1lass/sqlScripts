@@ -71,17 +71,7 @@ CREATE INDEX IDX_BuildingName ON Building(BuildingName);
 /**********************************************/
 /** PART 2: Creating the University Database **/
 
-DROP TABLE course;
-CREATE TABLE course ( 
-    DepartmentID VARCHAR2(4) NOT NULL,
-    CourseNumber VARCHAR2(4) NOT NULL,
-    CourseTitle VARCHAR2(60) NOT NULL,
-    CatalogDescription VARCHAR2(500) NOT NULL,
-    CreditHours NUMBER(5,3) NOT NULL,
-    CONSTRAINT PK_CourseNumber PRIMARY KEY (CourseNumber),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID) --also is pk idk what2do
-        REFERENCES department(DepartmentID)
-);
+
 
 DROP TABLE department;
 CREATE TABLE department (
@@ -89,6 +79,34 @@ CREATE TABLE department (
     DepartmentName VARCHAR2(50) NOT NULL,
     DepartmentOffice VARCHAR2(30),
     CONSTRAINT PK_Department PRIMARY KEY (DepartmentID)
+);
+
+DROP TABLE course;
+CREATE TABLE course ( 
+    DepartmentID VARCHAR2(4) NOT NULL,
+    CourseNumber VARCHAR2(4) NOT NULL,
+    CourseTitle VARCHAR2(60) NOT NULL,
+    CatalogDescription VARCHAR2(500) NOT NULL,
+    CreditHours NUMBER(5,3) NOT NULL,
+    CONSTRAINT PK_Course PRIMARY KEY (DepartmentID, CourseNumber),
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+        REFERENCES department(DepartmentID)
+);
+
+DROP TABLE section;
+CREATE TABLE section (
+    DepartmentID VARCHAR2(4) NOT NULL,
+    CourseNumber VARCHAR2(4) NOT NULL,
+    SectionNumber VARCHAR2(3) NOT NULL,
+    CreditHours	NUMBER(5,3),
+    SpecialTitle VARCHAR2(30),
+    MaximumEnrollment NUMBER(3),
+    TeacherENumber VARCHAR2(9),
+    CONSTRAINT PK_Section PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber),
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+        REFERENCES department(DepartmentID),
+    CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
+        REFERENCES course(CourseNumber)
 );
 
 DROP TABLE donation;
@@ -100,6 +118,48 @@ CREATE TABLE donation (
     CONSTRAINT PK_Donation PRIMARY KEY (DonationID),
     CONSTRAINT FK_ForDepartmentID FOREIGN KEY (ForDepartmentID) 
         REFERENCES department(DepartmentID) 
+);
+
+DROP TABLE person;
+CREATE TABLE person (
+    ENumber VARCHAR2(9) NOT NULL,
+    SSN VARCHAR2(9),
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Street VARCHAR2(50),
+    City VARCHAR2(2),
+    Zipcode VARCHAR2(9),
+    Telephone VARCHAR2(10),
+    BuildingID NUMBER(3),
+    RoomNumber NUMBER(4),
+    CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
+    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
+        REFERENCES building(BuildingID),
+    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
+        REFERENCES room(RoomNumber)
+);
+
+DROP TABLE room;
+CREATE TABLE room (
+    BuildingID NUMBER(3) NOT NULL,
+    RoomNumber NUMBER(4) NOT NULL,
+    RoomType CHAR,
+    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber),
+    CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
+        REFERENCES building(BuildingID)
+);
+
+DROP TABLE gift;
+CREATE TABLE gift (
+    DonationID NUMBER(5) NOT NULL,
+    ENumber VARCHAR2(9) NOT NULL, 
+    GiftDate DATE NOT NULL,
+    ReceiptDate DATE,
+    CONSTRAINT PK_Gift PRIMARY KEY (DonationID, ENumber, GiftDate),
+    CONSTRAINT FK_Donation FOREIGN KEY (DonationID)
+        REFERENCES donation(DonationID),
+    CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
+        REFERENCES person(ENumber)
 );
 
 DROP TABLE enrollment;
@@ -119,17 +179,12 @@ CREATE TABLE enrollment (
         REFERENCES section(SectionNumber)
 );
 
-DROP TABLE gift;
-CREATE TABLE gift (
-    DonationID NUMBER(5) NOT NULL,
-    ENumber VARCHAR2(9) NOT NULL, 
-    GiftDate DATE NOT NULL,
-    ReceiptDate DATE,
-    CONSTRAINT PK_Gift PRIMARY KEY (DonationID, ENumber, GiftDate),
-    CONSTRAINT FK_Donation FOREIGN KEY (DonationID)
-        REFERENCES donation(DonationID),
-    CONSTRAINT FK_ENumber FOREIGN KEY (ENumber)
-        REFERENCES person(ENumber)
+DROP TABLE position;
+CREATE TABLE position (
+    PositionNumber VARCHAR2(6) NOT NULL,
+    PositionTitle VARCHAR2(30) NOT NULL,
+    ActiveIndicator CHAR NOT NULL,
+    CONSTRAINT PK_Position PRIMARY KEY (PositionNumber)
 );
 
 DROP TABLE job;
@@ -169,55 +224,3 @@ CREATE TABLE meeting (
         REFERENCES room(RoomNumber)
 );
 
-DROP TABLE person;
-CREATE TABLE person (
-    ENumber VARCHAR2(9) NOT NULL,
-    SSN VARCHAR2(9),
-    FirstName VARCHAR2(50) NOT NULL,
-    LastName VARCHAR2(50) NOT NULL,
-    Street VARCHAR2(50),
-    City VARCHAR2(2),
-    Zipcode VARCHAR2(9),
-    Telephone VARCHAR2(10),
-    BuildingID NUMBER(3),
-    RoomNumber NUMBER(4),
-    CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
-        REFERENCES building(BuildingID),
-    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
-        REFERENCES room(RoomNumber)
-);
-
-DROP TABLE position;
-CREATE TABLE position (
-    PositionNumber VARCHAR2(6) NOT NULL,
-    PositionTitle VARCHAR2(30) NOT NULL,
-    ActiveIndicator CHAR NOT NULL,
-    CONSTRAINT PK_Position PRIMARY KEY (PositionNumber)
-);
-
-DROP TABLE room;
-CREATE TABLE room (
-    BuildingID NUMBER(3) NOT NULL,
-    RoomNumber NUMBER(4) NOT NULL,
-    RoomType CHAR,
-    CONSTRAINT PK_Room PRIMARY KEY (BuildingID, RoomNumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID)
-        REFERENCES building(BuildingID)
-);
-
-DROP TABLE section;
-CREATE TABLE section (
-    DepartmentID VARCHAR2(4) NOT NULL,
-    CourseNumber VARCHAR2(4) NOT NULL,
-    SectionNumber VARCHAR2(3) NOT NULL,
-    CreditHours	NUMBER(5,3),
-    SpecialTitle VARCHAR2(30),
-    MaximumEnrollment NUMBER(3),
-    TeacherENumber VARCHAR2(9),
-    CONSTRAINT PK_Section PRIMARY KEY (DepartmentID, CourseNumber, SectionNumber),
-    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
-        REFERENCES department(DepartmentID),
-    CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
-        REFERENCES course(CourseNumber)
-);
