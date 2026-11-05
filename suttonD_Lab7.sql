@@ -107,6 +107,8 @@ CREATE TABLE section (
         REFERENCES department(DepartmentID),
     CONSTRAINT FK_Course FOREIGN KEY (CourseNumber)
         REFERENCES course(CourseNumber)
+    CONSTRAINT FK_TeacherENumber FOREIGN KEY (TeacherENumber)
+        REFERENCES person(ENumber)
 );
 
 DROP TABLE donation;
