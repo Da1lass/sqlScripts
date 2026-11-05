@@ -116,9 +116,9 @@ CREATE TABLE person (
     BuildingID NUMBER(3),
     RoomNumber NUMBER(4),
     CONSTRAINT PK_ENumber PRIMARY KEY (ENumber),
-    CONSTRAINT FK_Building FOREIGN KEY (BuildingID) 
+    CONSTRAINT FK_PersonBuilding FOREIGN KEY (BuildingID) 
         REFERENCES building(BuildingID),
-    CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
+    CONSTRAINT FK_PersonRoom FOREIGN KEY (RoomNumber)
         REFERENCES room(RoomNumber)
 );
 
@@ -225,4 +225,3 @@ CREATE TABLE meeting (
     CONSTRAINT FK_Room FOREIGN KEY (RoomNumber)
         REFERENCES room(RoomNumber)
 );
-
