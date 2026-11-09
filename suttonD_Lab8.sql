@@ -28,3 +28,8 @@ SELECT LASTNAME, FIRSTNAME, DEPARTMENT FROM ALLPOWDER.Employee;
 -- A3a. Select Customer Table for Alan
 SELECT LASTNAME, FIRSTNAME, EMAIL FROM ALLPOWDER.CUSTOMER
     WHERE FIRSTNAME = 'Alan';
+
+--------------------------------------
+-- A3b. Select Customer Table for Sarah
+SELECT LASTNAME, FIRSTNAME, EMAIL FROM ALLPOWDER.CUSTOMER
+    WHERE FIRSTNAME = 'Sarah';
