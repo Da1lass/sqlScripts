@@ -14,3 +14,12 @@ Identifier dictionary -
 Notes and Assumptions –
 -----------------------------------------------------------------------------
 */
+
+------------------------------
+-- A1. Select Department Table
+SELECT * FROM ALLPOWDER.Department;
+
+------------------------------
+-- A2. Select Employee Table
+-- wants LASTNAME, FIRSTNAME, and DEPARTMENT of employee table
+SELECT LASTNAME, FIRSTNAME, DEPARTMENT FROM ALLPOWDER.Employee;
