@@ -56,7 +56,7 @@ SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
 
 -----------------------------------------------------------------------------
 -- A5a. Shipping Cities
-
+SELECT ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale;
 
 -----------------------------------------------------------------------------
 -- A5b. Shipping Cities without Duplicates.
