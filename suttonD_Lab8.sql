@@ -38,3 +38,8 @@ SELECT LASTNAME, FIRSTNAME, EMAIL FROM ALLPOWDER.CUSTOMER
 -- A3c. Select Customer Table for McCoys
 SELECT LASTNAME, FIRSTNAME, EMAIL FROM ALLPOWDER.CUSTOMER
     WHERE LASTNAME = 'McCoy';
+
+--------------------------------------
+-- A4a. Select Employees in Boards Dept.
+SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
+    WHERE DEPARTMENT = 'Boards';
