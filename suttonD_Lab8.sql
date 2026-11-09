@@ -51,7 +51,8 @@ SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
 
 -----------------------------------------------------------------------------
 -- A4c. Select Employees in both Ski Departments
-
+SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
+    WHERE DEPARTMENT = 'Ski-Alpine' OR DEPARTMENT = 'Ski-Nordic';
 
 -----------------------------------------------------------------------------
 -- A5a. Shipping Cities
