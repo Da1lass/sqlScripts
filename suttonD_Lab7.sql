@@ -60,7 +60,8 @@ CREATE TABLE building (
 );
 /* 1.5: Why use ALTER instead of DROP and (re)CREATE?
 
-<<Type your answer here.>>
+We would use the ALTER command rather than DROP and CREATE to add a field because if the table was populated with data, 
+dropping the table would delete all stored data, while altering in our statements just adds a field and a new constraint.
 
 */
 
