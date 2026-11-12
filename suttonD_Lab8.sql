@@ -95,7 +95,8 @@ SELECT * FROM ALLPOWDER.Employee;
 
 -----------------------------------------------------------------------------
 -- B2. Copy the Department Table
-
+CREATE TABLE Department AS
+SELECT * FROM ALLPOWDER.Department;
 
 -----------------------------------------------------------------------------
 -- C1. Insert to the Employee Table
