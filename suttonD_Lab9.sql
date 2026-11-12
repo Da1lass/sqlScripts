@@ -43,4 +43,19 @@ SELECT * FROM HR.Employees
 -----------------------------------------------------------------------------
 -- A6. Employees phone number in the format ###.##.####.######
 SELECT * FROM HR.Employees
-    WHERE REGEXP_LIKE (PHONE_NUMBER, '^[0-9]{3}\.[0-9]{2}\.[0-9]{4}\.[0-9]{5}');
+    WHERE REGEXP_LIKE (PHONE_NUMBER, 
+                        '^[0-9]{3}\.[0-9]{2}\.[0-9]{4}\.[0-9]{5}');
+
+-----------------------------------------------------------------------------
+-- B1. Employees Last and first names
+-- SELECT CONCAT(CONCAT(FIRST_NAME, ' '), LAST_NAME) FROM HR.Employees;
+SELECT FIRST_NAME || ' ' || LAST_NAME FROM HR.Employees;
+
+-----------------------------------------------------------------------------
+-- B2. Special Employee IDs in the format ZZ-###
+-- SELECT CONCAT('ZZ-', TO_CHAR(EMPLOYEE_ID)) FROM HR.Employees;
+SELECT 'ZZ-' || TO_CHAR(EMPLOYEE_ID) FROM HR.Employees;
+
+-----------------------------------------------------------------------------
+-- B3. Department names surrounded by asterisks
+SELECT DEPARTMENT_NAME LPAD(DEPARTMENT_NAME, 20, '*') FROM HR.Departments;
