@@ -72,7 +72,8 @@ SELECT COUNT(*) FROM ALLPOWDER.Rental;
 
 -----------------------------------------------------------------------------
 -- A6b. Number of Rentals by Payment Type
-
+SELECT PaymentMethod, COUNT(*) AS TotalRentals FROM ALLPOWDER.Rental
+    GROUP BY PaymentMethod;
 
 -----------------------------------------------------------------------------
 -- A6c. TotalAmount of Sales: $###,###.##
