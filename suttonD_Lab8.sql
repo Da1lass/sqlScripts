@@ -77,7 +77,7 @@ SELECT PaymentMethod, COUNT(*) AS TotalRentals FROM ALLPOWDER.Rental
 
 -----------------------------------------------------------------------------
 -- A6c. TotalAmount of Sales: $###,###.##
-
+SELECT TO_CHAR(SUM(QuantitySold * SalePrice), 'FM$999,999,990.00') AS TotalSales FROM ALLPOWDER.SaleItem;
 
 -----------------------------------------------------------------------------
 -- A6d. Average Sale Price: $###,###.##
