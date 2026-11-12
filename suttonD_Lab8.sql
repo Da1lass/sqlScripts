@@ -107,3 +107,7 @@ INSERT INTO Employee (EMPLOYEEID, TAXPAYERID, LASTNAME, FIRSTNAME, ADDRESS, PHON
 -- C2. Update the Employee Table
 UPDATE Employee
     SET FirstName = 'Dallas', LastName = 'Sutton';
+
+-----------------------------------------------------------------------------
+-- C3. Delete the Department Table
+DROP TABLE Department;
