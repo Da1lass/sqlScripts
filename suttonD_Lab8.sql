@@ -68,7 +68,7 @@ SELECT UNIQUE ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale; -- dude idek wha
 
 -----------------------------------------------------------------------------
 -- A6a. Number of Rentals: ###
-
+SELECT COUNT(*) FROM ALLPOWDER.Rental;
 
 -----------------------------------------------------------------------------
 -- A6b. Number of Rentals by Payment Type
