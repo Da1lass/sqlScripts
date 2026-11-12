@@ -85,7 +85,8 @@ SELECT TO_CHAR(AVG(QuantitySold * SalePrice), 'FM$999,999,990.00') AS AvgSales F
 
 -----------------------------------------------------------------------------
 -- A6e. Average Sales Tax Per Payment Type
-
+SELECT PaymentMethod, TO_CHAR(AVG(SalesTax), 'FM$999,999,990.00') AS AvgSaleTax FROM ALLPOWDER.Sale
+    GROUP BY PaymentMethod;
 
 -----------------------------------------------------------------------------
 -- B1. Copy the Employee Table
