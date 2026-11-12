@@ -81,7 +81,7 @@ SELECT TO_CHAR(SUM(QuantitySold * SalePrice), 'FM$999,999,990.00') AS TotalSales
 
 -----------------------------------------------------------------------------
 -- A6d. Average Sale Price: $###,###.##
-
+SELECT TO_CHAR(AVG(QuantitySold * SalePrice), 'FM$999,999,990.00') AS AvgSales FROM ALLPOWDER.SaleItem;
 
 -----------------------------------------------------------------------------
 -- A6e. Average Sales Tax Per Payment Type
