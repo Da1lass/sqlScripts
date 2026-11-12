@@ -47,7 +47,7 @@ SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
 -----------------------------------------------------------------------------
 -- A4b. Select Employees in Ski Departments
 SELECT FIRSTNAME, LASTNAME FROM ALLPOWDER.Employee
-    WHERE DEPARTMENT LIKE 'Ski-%';
+    WHERE DEPARTMENT = 'Ski-Alpine' OR DEPARTMENT = 'Ski-Nordic';
 
 -----------------------------------------------------------------------------
 -- A4c. Select Employees in both Ski Departments
