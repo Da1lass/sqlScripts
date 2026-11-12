@@ -90,7 +90,8 @@ SELECT PaymentMethod, TO_CHAR(AVG(SalesTax), 'FM$999,999,990.00') AS AvgSaleTax 
 
 -----------------------------------------------------------------------------
 -- B1. Copy the Employee Table
-
+CREATE TABLE Employee AS
+SELECT * FROM ALLPOWDER.Employee;
 
 -----------------------------------------------------------------------------
 -- B2. Copy the Department Table
