@@ -60,11 +60,11 @@ SELECT ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale;
 
 -----------------------------------------------------------------------------
 -- A5b. Shipping Cities without Duplicates.
-SELECT UNIQUE ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale; -- dude idek whats up with this   
+SELECT DISTINCT ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale;  
 
 -----------------------------------------------------------------------------
 -- A5c. Number of Shipping Duplicates: ###
---cant do until i can actuall filter duplicates (a5b)
+SELECT COUNT(ShipCity) - COUNT(DISTINCT ShipCity) AS DuplicateInformation FROM Sale;
 
 -----------------------------------------------------------------------------
 -- A6a. Number of Rentals: ###
