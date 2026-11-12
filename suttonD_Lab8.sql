@@ -60,7 +60,7 @@ SELECT ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale;
 
 -----------------------------------------------------------------------------
 -- A5b. Shipping Cities without Duplicates.
-
+SELECT UNIQUE ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale; -- dude idek whats up with this   
 
 -----------------------------------------------------------------------------
 -- A5c. Number of Shipping Duplicates: ###
