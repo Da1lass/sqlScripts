@@ -105,3 +105,5 @@ INSERT INTO Employee (EMPLOYEEID, TAXPAYERID, LASTNAME, FIRSTNAME, ADDRESS, PHON
 
 -----------------------------------------------------------------------------
 -- C2. Update the Employee Table
+UPDATE Employee
+    SET FirstName = 'Dallas', LastName = 'Sutton';
