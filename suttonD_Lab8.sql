@@ -100,7 +100,8 @@ SELECT * FROM ALLPOWDER.Department;
 
 -----------------------------------------------------------------------------
 -- C1. Insert to the Employee Table
-
+INSERT INTO Employee (EMPLOYEEID, TAXPAYERID, LASTNAME, FIRSTNAME, ADDRESS, PHONE, CITY, STATE, ZIP, DEPARTMENT)
+    VALUES (null, null, 'Sutton', 'Dallas', null, null, null, null, null, null); 
 
 -----------------------------------------------------------------------------
 -- C2. Update the Employee Table
