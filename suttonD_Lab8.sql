@@ -64,7 +64,7 @@ SELECT UNIQUE ShipCity, ShipState, ShipZip FROM ALLPOWDER.Sale; -- dude idek wha
 
 -----------------------------------------------------------------------------
 -- A5c. Number of Shipping Duplicates: ###
-
+--cant do until i can actuall filter duplicates (a5b)
 
 -----------------------------------------------------------------------------
 -- A6a. Number of Rentals: ###
