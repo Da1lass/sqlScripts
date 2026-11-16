@@ -58,4 +58,7 @@ SELECT 'ZZ-' || TO_CHAR(EMPLOYEE_ID) FROM HR.Employees;
 
 -----------------------------------------------------------------------------
 -- B3. Department names surrounded by asterisks
-SELECT RPAD(LPAD(DEPARTMENT_NAME, LENGTH+1, '*'), LENGTH+1, '*') FROM HR.Departments;
+SELECT LPAD(RPAD(DEPARTMENT_NAME, (LENGTH(DEPARTMENT_NAME)+1), '*'), (LENGTH(DEPARTMENT_NAME)+2), '*') FROM HR.Departments;
+
+-----------------------------------------------------------------------------
+-- B4. Formatted Location Addresses
