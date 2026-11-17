@@ -62,3 +62,18 @@ SELECT LPAD(RPAD(DEPARTMENT_NAME, (LENGTH(DEPARTMENT_NAME)+1), '*'), (LENGTH(DEP
 
 -----------------------------------------------------------------------------
 -- B4. Formatted Location Addresses
+-- SELECT STREET_ADDRESS, CITY, STATE_PROVINCE, POSTAL_CODE, COUNTRY_ID FROM HR.Locations;
+SELECT TO_CHAR(STREET_ADDRESS)|| CHR(13) 
+    || '     ' || TO_CHAR(CITY) || ' ' || TO_CHAR(STATE_PROVINCE) || ' ' || TO_CHAR(POSTAL_CODE) || ' ' || TO_CHAR(COUNTRY_ID) 
+    AS FormmattedAddress FROM HR.Locations;
+
+-----------------------------------------------------------------------------
+-- B5. Formatted Dates
+SELECT 
+    TO_CHAR(SYSDATE, 'MMDDYYYY') COL1,
+    TO_CHAR(SYSDATE, 'MON-YYYY') COL2,
+    TO_CHAR(SYSDATE, 'YYYY/MM/DD') COL3,
+    TO_CHAR(SYSDATE, 'MON DD, YYYY') COL4,
+    TO_CHAR(SYSDATE, 'DAY, MON DD, YYYY') COL5,
+    TO_CHAR(SYSDATE, 'MON DD, YYYY, HH:MI:SS AM') COL6
+    FROM dual;
