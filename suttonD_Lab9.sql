@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 Programmer’s Name: Dallas Sutton
 Course: CSCI 2020 Section Number: 001
-Creation Date: 11/12/2026 Date of Last Modification: 11/12/2026
+Creation Date: 11/12/2026 Date of Last Modification: 11/19/2026
 E-mail Address:suttoncr@etsu.edu
 -----------------------------------------------------------------------------
 Purpose -
@@ -77,3 +77,42 @@ SELECT
     TO_CHAR(SYSDATE, 'DAY, MON DD, YYYY') COL5,
     TO_CHAR(SYSDATE, 'MON DD, YYYY, HH:MI:SS AM') COL6
     FROM dual;
+
+-----------------------------------------------------------------------------
+-- C1. Simple Join of Employees and Departments
+SELECT
+    employee.Employee_ID, employee.Last_Name, employee.First_Name, department.Department_Name FROM HR.Employees Employee
+    INNER JOIN HR.Departments Department
+        ON employee.Department_ID = department.Department_ID;
+
+-----------------------------------------------------------------------------
+-- C2. Select with two joins, including a self-join
+SELECT
+    employee.Employee_ID, employee.Last_Name, employee.First_Name, department.Department_Name, 
+    manager.First_Name AS ManagerFirstName, manager.Last_Name AS ManagerLastName FROM HR.Employees Employee
+    INNER JOIN HR.Departments Department
+        ON employee.Department_ID = department.Department_ID
+    INNER JOIN HR.Employees Manager
+        ON employee.Manager_ID = manager.Employee_ID;
+
+-----------------------------------------------------------------------------
+-- C3. Cross Join Example
+SELECT COUNT(*) AS EmployeeCount FROM HR.Employees;
+
+SELECT COUNT(*) AS DepartmentCount FROM HR.Departments;
+
+SELECT (SELECT COUNT(*) FROM HR.Employees) * (SELECT COUNT(*) FROM HR.Departments) AS ProductCount FROM dual;
+
+SELECT * FROM HR.Employees
+    CROSS JOIN HR.Departments;
+
+-----------------------------------------------------------------------------
+--C4. Cross Join as Inner Join Example
+SELECT * FROM HR.Employees
+    CROSS JOIN HR.Departments
+    WHERE HR.Employees.Department_ID = HR.Departments.Department_ID
+
+/*
+Number of Records Returned: 106
+How does this compare and why? it removes any records from the output that have a null department id
+*/
