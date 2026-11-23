@@ -1,0 +1,139 @@
+--  dropping all the tables in reverse creation order
+
+DROP TABLE Participation;
+DROP TABLE Hobby;
+DROP TABLE BCUAccountDependent;
+DROP TABLE BCUAccountEmployees;
+DROP TABLE Dependent;
+DROP TABLE Job;
+DROP TABLE Manager;
+ALTER TABLE Plant DROP CONSTRAINT FK_PlantManager;
+DROP TABLE Employee;
+DROP TABLE Project;
+DROP TABLE Building;
+DROP TABLE Plant;
+
+
+CREATE TABLE Plant (
+    PlantNumber NUMBER(5) NOT NULL,
+    PlantName VARCHAR(50),
+    Budget NUMBER(11,2),
+    ManagerNumber NUMBER(8), -- this needs to be a FK after the employee table has been done
+    CONSTRAINT PK_Plant PRIMARY KEY (PlantNumber)
+);
+
+CREATE TABLE Building (
+    BuildingNumber	NUMBER(3),
+    BuildingName	VARCHAR(50),
+    PlantNumber	NUMBER(5),
+    CONSTRAINT PK_Building PRIMARY KEY (BuildingNumber),
+    CONSTRAINT FK_BuildingPlant FOREIGN KEY (PlantNumber)
+        REFERENCES Plant(PlantNumber)
+);
+
+CREATE TABLE Project (
+    ProjectNumber NUMBER(8) NOT NULL,
+    ProjectName VARCHAR(50),
+    Location VARCHAR(50),
+    PlantNumber NUMBER(5) NOT NULL,
+    CONSTRAINT PK__Project PRIMARY KEY (ProjectNumber),
+    CONSTRAINT FK_ProjectPlant FOREIGN KEY (PlantNumber)
+        REFERENCES Plant(PlantNumber)
+);
+
+CREATE TABLE Employee (
+    EmployeeNumber NUMBER(8) NOT NULL,
+    FirstName VARCHAR2(20),
+    LastName VARCHAR2(50),
+    StreetLine1 VARCHAR2(50),
+    StreetLine2 VARCHAR2(20),
+    City VARCHAR2(50),
+    State VARCHAR2(2),
+    Postal NUMBER(5),
+    Gender CHAR,
+    DateHired DATE,
+    Salary NUMBER(8,2),
+    SupervisorNumber NUMBER(8) NOT NULL,
+    PlantNumber NUMBER(5) NOT NULL,
+    CONSTRAINT PK_EmployeeNumber PRIMARY KEY (EmployeeNumber),
+    CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
+        REFERENCES Plant(PlantNumber),
+    CONSTRAINT FK_Supervisor FOREIGN KEY (SupervisorNumber)
+        REFERENCES Employee(EmployeeNumber)
+);
+
+CREATE TABLE Manager (
+    ManagerNumber NUMBER(8) NOT NULL,
+    ManagerStartDate DATE,
+    CONSTRAINT PK_Manager PRIMARY KEY (ManagerNumber),
+    CONSTRAINT FK_Manager FOREIGN KEY (ManagerNumber)
+        REFERENCES Employee(EmployeeNumber)
+);
+
+CREATE TABLE Job (
+    EmployeeNumber	NUMBER(8),
+    ProjectNumber	NUMBER(8),
+    CONSTRAINT PK_Job PRIMARY KEY (EmployeeNumber, ProjectNumber),
+    CONSTRAINT FK_JobEmployeeNumber FOREIGN KEY (EmployeeNumber)
+        REFERENCES Employee(EmployeeNumber),
+    CONSTRAINT FK_JobProjectNumber FOREIGN KEY (ProjectNumber)
+        REFERENCES Project(ProjectNumber)
+);
+
+CREATE TABLE Dependent (
+    DependentEmployeeNumber	NUMBER(8) NOT NULL,
+    DependentFirstName	VARCHAR2(20) NOT NULL,
+    DependentLastName	VARCHAR2(50) NOT NULL,
+    Relationship	VARCHAR2(30),
+    BirthDate	DATE,
+    Gender	CHAR,
+    CONSTRAINT PK_Dependent PRIMARY KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName),
+    CONSTRAINT FK_DependentEmployeeNumber FOREIGN KEY (DependentEmployeeNumber)
+        REFERENCES Employee(EmployeeNumber)
+);
+
+CREATE TABLE BCUAccountEmployees (
+    AccountNumber	NUMBER(8) NOT NULL,
+    AccountType	CHAR NOT NULL,
+    Balance	NUMBER(11,2), 
+    EmployeeNumber	NUMBER(8) NOT NULL,
+    CONSTRAINT PK_BCUAccountEmployee PRIMARY KEY (AccountNumber, AccountType),
+    CONSTRAINT FK_BCUAccountEmployee FOREIGN KEY (EmployeeNumber)
+        REFERENCES Employee(EmployeeNumber)
+);
+
+CREATE TABLE BCUAccountDependent (
+    AccountNumber	NUMBER(8) NOT NULL,
+    AccountType	CHAR NOT NULL,
+    Balance	NUMBER(11,2),
+    DependentEmployeeNumber	NUMBER(8) NOT NULL,
+    DependentFirstName	VARCHAR2(20) NOT NULL,
+    DependentLastName	VARCHAR2(50) NOT NULL,
+    CONSTRAINT PK_BCUAccountDependent PRIMARY KEY (AccountNumber, AccountType, DependentEmployeeNumber, DependentFirstName, DependentLastName),
+    CONSTRAINT FK_BCUAccountDependent FOREIGN KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName)
+        REFERENCES Dependent(DependentEmployeeNumber, DependentFirstName, DependentLastName)
+);
+
+CREATE TABLE Hobby (
+    HobbyName	VARCHAR(50) NOT NULL,
+    Activity	VARCHAR(50),
+    CONSTRAINT PK_Hobby PRIMARY KEY (HobbyName)
+);
+
+CREATE TABLE Participation (
+    HobbyName	VARCHAR(50) NOT NULL,
+    DependentEmployeeNumber	NUMBER(8) NOT NULL, 
+    DependentFirstName	VARCHAR2(20) NOT NULL,
+    DependentLastName	VARCHAR2(50) NOT NULL,
+    AnnualCost	NUMBER(8,2),
+    HoursPerWeek	NUMBER(2),
+    CONSTRAINT PK_Participation PRIMARY KEY (HobbyName, DependentEmployeeNumber, DependentFirstName, DependentLastName),
+    CONSTRAINT FK_ParticipationHobby FOREIGN KEY (HobbyName)
+        REFERENCES Hobby(HobbyName),
+    CONSTRAINT FK_ParticipationDependent FOREIGN KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName)
+    REFERENCES Dependent(DependentEmployeeNumber, DependentFirstName, DependentLastName)
+);
+
+-- adding the plant manager stuff
+ALTER TABLE Plant ADD (CONSTRAINT FK_PlantManager FOREIGN KEY (ManagerNumber)
+    REFERENCES Employee(EmployeeNumber));
