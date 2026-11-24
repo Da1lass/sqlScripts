@@ -2,8 +2,9 @@
 
 DROP TABLE Participation;
 DROP TABLE Hobby;
-DROP TABLE BCUAccountDependent;
-DROP TABLE BCUAccountEmployees;
+DROP TABLE BCUAccount;
+-- DROP TABLE BCUAccountDependent; 
+-- DROP TABLE BCUAccountEmployees; ----see comment above this table for why these are commented out
 DROP TABLE Dependent;
 DROP TABLE Job;
 DROP TABLE Manager;
