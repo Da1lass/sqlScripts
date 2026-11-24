@@ -23,7 +23,8 @@ DROP TABLE Participation;
 DROP TABLE Hobby;
 DROP TABLE BCUAccount;
 -- DROP TABLE BCUAccountDependent; 
--- DROP TABLE BCUAccountEmployees; ----see comment above this table for why these are commented out
+-- DROP TABLE BCUAccountEmployees; ----see comment above this table for why these are commented out, i left them because 
+-- i left the tables aswell
 DROP TABLE Dependent;
 DROP TABLE Job;
 DROP TABLE Manager;
@@ -38,7 +39,7 @@ CREATE TABLE Plant (
     PlantNumber NUMBER(5) NOT NULL,
     PlantName VARCHAR(50),
     Budget NUMBER(11,2),
-    ManagerNumber NUMBER(8), -- this needs to be a FK after the employee table has been done
+    ManagerNumber NUMBER(8), -- this needs to be a FK after the employee table has been created
     CONSTRAINT PK_Plant PRIMARY KEY (PlantNumber)
 );
 
@@ -78,13 +79,15 @@ CREATE TABLE Employee (
     CONSTRAINT PK_EmployeeNumber PRIMARY KEY (EmployeeNumber)--,
     --CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
         --REFERENCES Plant(PlantNumber),
-    --CONSTRAINT FK_Supervisor FOREIGN KEY (SupervisorNumber)
-        --REFERENCES Employee(EmployeeNumber)
+    --CONSTRAINT FK_Supervisor FOREIGN KEY (SupervisorNumber) --these constraints are added after dummy items have been inserted.
+        --REFERENCES Employee(EmployeeNumber)                 --i couldnt think of another way to insert values later on
 );
 INSERT INTO Plant 
     VALUES (0, 'dummy', 0, 0); --dummy plant row, same logic as below
 INSERT INTO Employee
-    VALUES (0, 'dummy', null, null, null, null, null, null, null, null, null, 0, 0); --a dummy employee row for managers and supervisors to be assigned too temporarily. They would hopefully only use 'dummy' to insert all the supervisors and then insert the rest of the employees.
+    VALUES (0, 'dummy', null, null, null, null, null, null, null, null, null, 0, 0); 
+    --a dummy employee row for managers and supervisors to be assigned too temporarily. They would hopefully only use 'dummy' to 
+    --insert all the supervisors and then insert the rest of the employees.
 
 
 ALTER TABLE Employee ADD (CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
@@ -155,7 +158,7 @@ CREATE TABLE BCUAccount (
         REFERENCES Dependent(DependentEmployeeNumber, DependentFirstName, DependentLastName)
 );
 
--- CREATE TABLE BCUAccountEmployees ( I did this and the next table b4 i realized there needed to be one single table. oops.
+-- CREATE TABLE BCUAccountEmployees ( --I did this and the next table b4 i realized there needed to be one single table. oops.
 --     AccountNumber NUMBER(8) NOT NULL,
 --     AccountType CHAR NOT NULL,
 --     Balance NUMBER(11,2), 
@@ -165,7 +168,7 @@ CREATE TABLE BCUAccount (
 --         REFERENCES Employee(EmployeeNumber)
 -- );
 
--- CREATE TABLE BCUAccountDependent (
+-- CREATE TABLE BCUAccountDependent ( --Same as above.
 --     AccountNumber NUMBER(8) NOT NULL,
 --     AccountType CHAR NOT NULL,
 --     Balance NUMBER(11,2),
