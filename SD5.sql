@@ -1,3 +1,22 @@
+/*
+-----------------------------------------------------------------------------
+Programmer’s Name: Dallas Sutton
+Course: CSCI 2020 Section Number: 001
+Creation Date: 11/23/2026 Date of Last Modification: 11/24/2026
+E-mail Address:suttoncr@etsu.edu
+-----------------------------------------------------------------------------
+Purpose -
+Semester Project 5
+-----------------------------------------------------------------------------
+Identifier dictionary -
+        Not Applicable
+-----------------------------------------------------------------------------
+Notes and Assumptions – My notes and assumptions are commented on the code with what they connect too, but heres the tldr.
+in  plant i need to make manager number a constraint after an employee has been made.
+I do some inserting into tables out of order, those are inserting in dummy values, see comment under 'STEP 5' for more info
+-----------------------------------------------------------------------------
+*/
+
 --  dropping all the tables in reverse creation order
 
 DROP TABLE Participation;
@@ -13,8 +32,8 @@ DROP TABLE Employee;
 DROP TABLE Project;
 DROP TABLE Building;
 DROP TABLE Plant;
- --creating all tables
-
+-- creating all tables
+-- STEP 1
 CREATE TABLE Plant (
     PlantNumber NUMBER(5) NOT NULL,
     PlantName VARCHAR(50),
@@ -56,12 +75,22 @@ CREATE TABLE Employee (
     Salary NUMBER(8,2),
     SupervisorNumber NUMBER(8) NOT NULL,
     PlantNumber NUMBER(5) NOT NULL,
-    CONSTRAINT PK_EmployeeNumber PRIMARY KEY (EmployeeNumber),
-    CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
+    CONSTRAINT PK_EmployeeNumber PRIMARY KEY (EmployeeNumber)--,
+    --CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
+        --REFERENCES Plant(PlantNumber),
+    --CONSTRAINT FK_Supervisor FOREIGN KEY (SupervisorNumber)
+        --REFERENCES Employee(EmployeeNumber)
+);
+INSERT INTO Plant 
+    VALUES (0, 'dummy', 0, 0); --dummy plant row, same logic as below
+INSERT INTO Employee
+    VALUES (0, 'dummy', null, null, null, null, null, null, null, null, null, 0, 0); --a dummy employee row for managers and supervisors to be assigned too temporarily. They would hopefully only use 'dummy' to insert all the supervisors and then insert the rest of the employees.
+
+
+ALTER TABLE Employee ADD (CONSTRAINT FK_EmployeePlant FOREIGN KEY (PlantNumber)
         REFERENCES Plant(PlantNumber),
     CONSTRAINT FK_Supervisor FOREIGN KEY (SupervisorNumber)
-        REFERENCES Employee(EmployeeNumber)
-);
+        REFERENCES Employee(EmployeeNumber));
 
 CREATE TABLE Manager (
     ManagerNumber NUMBER(8) NOT NULL,
@@ -99,13 +128,13 @@ CREATE TABLE BCUAccount (
     AccountType CHAR NOT NULL,
     Balance NUMBER(11,2) DEFAULT 0, 
     -- employee account values
-    EmployeeNumber NUMBER(8) NOT NULL,
+    EmployeeNumber NUMBER(8),
     FirstName VARCHAR2(20),
     LastName VARCHAR2(50),
     -- dependent account values
-    DependentEmployeeNumber NUMBER(8) NOT NULL,
-    DependentFirstName VARCHAR2(20) NOT NULL,
-    DependentLastName VARCHAR2(50) NOT NULL,
+    DependentEmployeeNumber NUMBER(8),
+    DependentFirstName VARCHAR2(20),
+    DependentLastName VARCHAR2(50),
 
     CONSTRAINT PK_AccountInfo PRIMARY KEY (AccountNumber, AccountType),
     -- constraints for checking 
@@ -193,7 +222,8 @@ DROP INDEX IDX_Plant_Manager;
 DROP INDEX IDX_ProjectName;
 DROP INDEX IDX_Project_Plant; */
 
--- index creation
+-- STEP 3
+-- BCUAccount
 CREATE INDEX IDX_BCU_Dependent ON BCUAccount(DependentEmployeeNumber, DependentFirstName, DependentLastName);
 CREATE INDEX IDX_BCU_Employee ON BCUAccount(FirstName, LastName);
 
@@ -230,3 +260,66 @@ CREATE INDEX IDX_Plant_Manager ON Plant(ManagerNumber, PlantName, PlantNumber);
 CREATE INDEX IDX_ProjectName ON Project(ProjectName, ProjectNumber);
 CREATE INDEX IDX_Project_Plant ON Project(ProjectName, PlantNumber);
 
+-- STEP 4
+
+INSERT INTO Plant
+    VALUES (1, 'Plant', 0, 0);
+    
+INSERT INTO Building
+    VALUES (1, 'Building', 1);
+
+INSERT INTO Project
+    VALUES (1, 'ProjectName', 'ProjectLocal', 1);
+
+INSERT INTO Employee
+    VALUES (1, 'Dallas', 'Sutton', 'Address', null, 'City', 'NC', 27200, null, TO_DATE('24/11/2026', 'DD/MM/YYYY'), 1000.00, 1, 1);
+
+INSERT INTO Manager
+    VALUES (1, TO_DATE('24/11/2026', 'dd/mm/yyyy'));
+
+UPDATE Plant
+    SET ManagerNumber = 1
+    WHERE   PlantNumber = 1;
+
+INSERT INTO Job 
+    VALUES (1, 1);
+
+INSERT INTO Dependent
+    VALUES (1, 'My', 'Dog', null, TO_DATE('01/01/2013', 'DD/MM/YYYY'), 'M');
+
+INSERT INTO BCUAccount (AccountNumber, AccountType, Balance, EmployeeNumber, FirstName, LastName)
+    VALUES (1, 'E', 0.00, 1, 'Dallas', 'Sutton');
+
+INSERT INTO BCUAccount (AccountNumber, AccountType, Balance, DependentEmployeeNumber, DependentFirstName, DependentLastName)
+    VALUES (2, 'D', 100000.00, 1, 'My', 'Dog');
+
+INSERT INTO Hobby
+    VALUES ('Swimming', 'The activity is swimming in a pool.');
+
+INSERT INTO Participation
+    VALUES ('Swimming', 1, 'My', 'Dog', 100.00, 8);
+
+UPDATE Plant
+    SET PlantName = 'ETSU Physical Plant', Budget = 1000000
+    WHERE PlantNumber = 1;
+
+-- STEP 5
+
+-- deleting etsu physical plant now, since i made a dummy plant and employee i can just assign the building, project, and employee
+-- to the dummy plant temporarily. I'm assuming that plant '0' doesnt exist, and that bearcat inc would regularly check the 
+-- database to make sure everyone was assigned to an actual plant and not plant 0, or that plants had actual managers not 
+-- employee 'dummy' with id of 0
+UPDATE Building
+    SET PlantNumber = 0
+    WHERE PlantNumber = 1;
+
+UPDATE Project
+    SET PlantNumber = 0
+    WHERE PlantNumber = 1;
+
+UPDATE Employee
+    SET PlantNumber = 0;
+    WHERE PlantNumber = 1;
+
+DELETE FROM Plant 
+    WHERE PlantName = 'ETSU Physical Plant';
