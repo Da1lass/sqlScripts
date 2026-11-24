@@ -92,27 +92,58 @@ CREATE TABLE Dependent (
         REFERENCES Employee(EmployeeNumber)
 );
 
-CREATE TABLE BCUAccountEmployees (
+CREATE TABLE BCUAccount (
+    -- these three values are in both dependent and employee accounts
     AccountNumber	NUMBER(8) NOT NULL,
     AccountType	CHAR NOT NULL,
-    Balance	NUMBER(11,2), 
+    Balance	NUMBER(11,2) DEFAULT 0, 
+    -- employee account values
     EmployeeNumber	NUMBER(8) NOT NULL,
-    CONSTRAINT PK_BCUAccountEmployee PRIMARY KEY (AccountNumber, AccountType),
-    CONSTRAINT FK_BCUAccountEmployee FOREIGN KEY (EmployeeNumber)
-        REFERENCES Employee(EmployeeNumber)
-);
-
-CREATE TABLE BCUAccountDependent (
-    AccountNumber	NUMBER(8) NOT NULL,
-    AccountType	CHAR NOT NULL,
-    Balance	NUMBER(11,2),
+    -- dependent account values
     DependentEmployeeNumber	NUMBER(8) NOT NULL,
     DependentFirstName	VARCHAR2(20) NOT NULL,
     DependentLastName	VARCHAR2(50) NOT NULL,
-    CONSTRAINT PK_BCUAccountDependent PRIMARY KEY (AccountNumber, AccountType, DependentEmployeeNumber, DependentFirstName, DependentLastName),
-    CONSTRAINT FK_BCUAccountDependent FOREIGN KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName)
+
+    CONSTRAINT PK_AccountInfo PRIMARY KEY (AccountNumber, AccountType),
+    -- constraints for checking 
+    CONSTRAINT CHK_AccountType CHECK (AccountType IN ('E', 'D')), -- E for employee, D for dependent
+    -- checking constraints
+    CONSTRAINT CHK_AccountEmployee CHECK (AccountType != 'E' OR EmployeeNumber IS NOT NULL),
+    CONSTRAINT CHK_AccountDependent CHECK (AccountType != 'D' OR 
+    DependentEmployeeNumber IS NOT NULL AND
+    DependentFirstName IS NOT NULL AND
+    DependentLastName IS NOT NULL AND
+    EmployeeNumber IS NULL
+    ),
+
+    
+    CONSTRAINT FK_AccountEmployee FOREIGN KEY (EmployeeNumber)
+        REFERENCES Employee(EmployeeNumber),
+    CONSTRAINT FK_AccountDependent FOREIGN KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName)
         REFERENCES Dependent(DependentEmployeeNumber, DependentFirstName, DependentLastName)
 );
+
+-- CREATE TABLE BCUAccountEmployees ( I did this and the next table b4 i realized there needed to be one single table. oops.
+--     AccountNumber	NUMBER(8) NOT NULL,
+--     AccountType	CHAR NOT NULL,
+--     Balance	NUMBER(11,2), 
+--     EmployeeNumber	NUMBER(8) NOT NULL,
+--     CONSTRAINT PK_BCUAccountEmployee PRIMARY KEY (AccountNumber, AccountType),
+--     CONSTRAINT FK_BCUAccountEmployee FOREIGN KEY (EmployeeNumber)
+--         REFERENCES Employee(EmployeeNumber)
+-- );
+
+-- CREATE TABLE BCUAccountDependent (
+--     AccountNumber	NUMBER(8) NOT NULL,
+--     AccountType	CHAR NOT NULL,
+--     Balance	NUMBER(11,2),
+--     DependentEmployeeNumber	NUMBER(8) NOT NULL,
+--     DependentFirstName	VARCHAR2(20) NOT NULL,
+--     DependentLastName	VARCHAR2(50) NOT NULL,
+--     CONSTRAINT PK_BCUAccountDependent PRIMARY KEY (AccountNumber, AccountType, DependentEmployeeNumber, DependentFirstName, DependentLastName),
+--     CONSTRAINT FK_BCUAccountDependent FOREIGN KEY (DependentEmployeeNumber, DependentFirstName, DependentLastName)
+--         REFERENCES Dependent(DependentEmployeeNumber, DependentFirstName, DependentLastName)
+-- );
 
 CREATE TABLE Hobby (
     HobbyName	VARCHAR(50) NOT NULL,
