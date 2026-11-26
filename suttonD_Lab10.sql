@@ -26,7 +26,9 @@ SELECT
         TO_CHAR((employee.Salary/jobs.Max_Salary * 100), 'FM999.99') || '%' AS "Percent of Maximum"
         FROM HR.Employees employee
         INNER JOIN HR.Jobs jobs
-        ON employee.Job_ID = jobs.Job_ID;
+        ON employee.Job_ID = jobs.Job_ID
+        ORDER BY employee.Last_Name ASC, employee.First_Name DESC;
+        
 
 -----------------------------------------------------------------------------
 -- Employee Location Report
@@ -77,10 +79,10 @@ SELECT
         FROM HR.Employees employee
         JOIN HR.Departments department
         ON employee.Department_ID = department.Department_ID
-        JOIN HR.Countries location
+        JOIN HR.Locations location
         ON department.Location_ID = location.Location_ID
         JOIN HR.Countries country 
         ON country.Country_ID = location.Country_ID
         JOIN HR.Regions region
         ON region.Region_ID = country.Region_ID
-        WHERE region.Region_Name = 1;
+        WHERE region.Region_ID = 1;
