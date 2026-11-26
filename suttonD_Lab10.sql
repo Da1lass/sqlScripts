@@ -30,10 +30,36 @@ SELECT
 
 -----------------------------------------------------------------------------
 -- Employee Location Report
+-- SELECT 
+--         employee.Employee_ID AS "Employee ID",
+--         employee.Last_Name || ', ' || employee.First_Name AS "Employee Name"
+--         FROM HR.Employees employee
+--         RIGHT JOIN HR.Job_History jobHistory 
+--         ON employee.Employee_ID = jobHistory.Employee_ID
+--         WHERE jobHistory.Department_ID = 20;
 SELECT 
         employee.Employee_ID AS "Employee ID",
         employee.Last_Name || ', ' || employee.First_Name AS "Employee Name"
+        FROM HR.Employees Employee
+        JOIN HR.Departments Department
+        ON employee.Department_ID = department.Department_ID
+        JOIN HR.Locations Location
+        ON location.Location_ID = department.Location_ID
+        WHERE location.City = 'Toronto';
+
+-----------------------------------------------------------------------------
+-- Manager Discrepancy Report
+SELECT
+        employee.Employee_ID AS "Employee ID",
+        employee.Last_Name || ', ' || employee.First_Name AS "Employee Name",
+        department.Department_Name AS "Department Name",
+        departmentManager.Last_Name || ', ' || departmentManager.First_Name AS "Department Manager",
+        manager.Last_Name || ', ' || manager.First_Name AS "Employee Manager"
         FROM HR.Employees employee
-        RIGHT JOIN HR.Job_History jobHistory 
-        ON employee.Employee_ID = jobHistory.EMployee_ID
-        WHERE jobHistory.Department_ID = 20;
+        JOIN HR.Departments department 
+        ON employee.Department_ID = department.Department_ID
+        LEFT JOIN HR.Employees manager
+        ON employee.Manager_ID = manager.Manager_ID
+        RIGHT JOIN HR.Employees departmentManager
+        ON department.Manager_ID = departmentManager.Employee_ID
+        WHERE employee.Manager_ID != department.Manager_ID;
