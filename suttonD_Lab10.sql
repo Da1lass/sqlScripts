@@ -30,13 +30,6 @@ SELECT
 
 -----------------------------------------------------------------------------
 -- Employee Location Report
--- SELECT 
---         employee.Employee_ID AS "Employee ID",
---         employee.Last_Name || ', ' || employee.First_Name AS "Employee Name"
---         FROM HR.Employees employee
---         RIGHT JOIN HR.Job_History jobHistory 
---         ON employee.Employee_ID = jobHistory.Employee_ID
---         WHERE jobHistory.Department_ID = 20;
 SELECT 
         employee.Employee_ID AS "Employee ID",
         employee.Last_Name || ', ' || employee.First_Name AS "Employee Name"
@@ -63,3 +56,14 @@ SELECT
         RIGHT JOIN HR.Employees departmentManager
         ON department.Manager_ID = departmentManager.Employee_ID
         WHERE employee.Manager_ID != department.Manager_ID;
+
+-----------------------------------------------------------------------------
+-- Departments Without Employees
+SELECT DISTINCT 
+       department.Department_ID AS "Department ID",
+       department.Department_Name AS "Department Name"
+       FROM HR.Employees employee
+       FULL OUTER JOIN HR.Departments department 
+       ON employee.Department_ID = department.Department_ID
+       WHERE employee.department_id IS NULL OR department.department_id IS NULL;
+
