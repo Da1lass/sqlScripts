@@ -67,3 +67,20 @@ SELECT DISTINCT
        ON employee.Department_ID = department.Department_ID
        WHERE employee.department_id IS NULL OR department.department_id IS NULL;
 
+-----------------------------------------------------------------------------
+-- European Employee Report
+SELECT 
+        employee.Employee_ID AS "Employee ID",
+        employee.Last_Name || ', ' || employee.First_Name AS "Employee Name",
+        country.Country_Name AS "Country Name",
+        region.Region_Name AS "Region Name"
+        FROM HR.Employees employee
+        JOIN HR.Departments department
+        ON employee.Department_ID = department.Department_ID
+        JOIN HR.Countries location
+        ON department.Location_ID = location.Location_ID
+        JOIN HR.Countries country 
+        ON country.Country_ID = location.Country_ID
+        JOIN HR.Regions region
+        ON region.Region_ID = country.Region_ID
+        WHERE region.Region_Name = 1;
